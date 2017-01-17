@@ -26,7 +26,7 @@ export function removeRoom (state, { id, user}) {
   const rooms = state.get('rooms');
   var index = rooms.findIndex( r => r.get('id') === id)
   if(index == -1 || rooms.getIn([index,'owner']) !== user ){
-        console.log('并非创建者，不能删除改房间');
+        console.log('———并非创建者，不能删除改房间');
         return state;
   }
   return state.update('rooms',rooms => rooms.splice(index,1));

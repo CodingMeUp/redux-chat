@@ -3,7 +3,7 @@ import {v1} from "uuid";
 import {fromJS,Map,List} from "immutable";
 
 import coreReducer  from '../../src/server/reducer';
-
+import {addRoom,removeRoom} from '../../src/server/actionCreator.js';
 
 describe("server端reducer",()=>{
   //类似array = [1,2,3,4,5];  array.reduce
@@ -21,4 +21,20 @@ describe("server端reducer",()=>{
       expect(finalState.get('rooms').size).to.equal(2); //添加了3个 删了1个
       expect(finalState.getIn(['rooms',0,'owner'])).to.equal('terry');//检查最终第一个房间的所有者是谁
       });
+
+    it('使用actionCreator',()=>{
+       var id = v1();
+       var actions = [
+              addRoom( {id,name:'1',owner:'cyn'}),
+              addRoom( {name:'2',owner:'terry'}),
+              addRoom( {name:'3',owner:'cyn'}),
+              removeRoom( {id:id,user:'cyn'})
+       ]
+       const  finalState  =actions.reduce( coreReducer,undefined);
+       expect(finalState.get('rooms').size).to.equal(2);
+       expect(finalState.getIn(['rooms',0,'owner'])).to.equal('terry');
+
+
+    })
+
 });

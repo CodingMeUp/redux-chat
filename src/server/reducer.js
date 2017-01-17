@@ -1,4 +1,6 @@
 
+//有了 reducer 和 action 之后 可以使用store了
+
 import {
   addRoom,
   removeRoom,
